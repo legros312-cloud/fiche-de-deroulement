@@ -1,0 +1,467 @@
+<html lang="fr"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiche TP Atelier</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --accent-red: #dc2626;
+            --border-color: #cbd5e1;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 30px 15px;
+            background-color: #f1f5f9;
+            color: #0f172a;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            border: 2px solid #cbd5e1;
+        }
+
+        .actions-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            background: #f8fafc;
+            padding: 15px 20px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .theme-selector {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #334155;
+        }
+
+        .btn {
+            padding: 9px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+
+        .btn-home { background-color: #3b82f6; }
+        .btn-home:hover { background-color: #2563eb; }
+        .btn-print { background-color: #0284c7; }
+        .btn-print:hover { background-color: #0369a1; }
+        .btn-save { background-color: #16a34a; }
+        .btn-save:hover { background-color: #15803d; }
+        .btn-add { background-color: #0d9488; }
+        .btn-add:hover { background-color: #0f766e; }
+        .btn-remove { background-color: #ef4444; padding: 4px 10px; font-size: 12px; }
+        .btn-remove:hover { background-color: #dc2626; }
+
+        .header-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid #94a3b8;
+            background: #fff;
+        }
+
+        .header-table td {
+            border-bottom: 1px solid #cbd5e1;
+            border-right: 1px solid #cbd5e1;
+            padding: 10px 14px;
+            font-size: 13px;
+        }
+
+        .tp-title {
+            text-align: center;
+            font-size: 17px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+        }
+
+        .trade-icon { font-size: 28px; }
+
+        label {
+            font-weight: 700;
+            font-size: 12px;
+            color: #1e293b;
+            display: block;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        input[type="text"], input[type="date"], select, textarea {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            background: #ffffff;
+        }
+
+        .section-box {
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            background: #ffffff;
+            border: 1px solid;
+        }
+
+        .box-material { border-color: #f59e0b; background: linear-gradient(to bottom, #fffbeb, #ffffff); }
+        .box-objectives { border-color: #10b981; background: linear-gradient(to bottom, #ecfdf5, #ffffff); }
+        .box-results { border-color: #8b5cf6; background: linear-gradient(to bottom, #f5f3ff, #ffffff); }
+        .box-op { border-color: #0284c7; background: linear-gradient(to bottom, #f0f9ff, #ffffff); }
+
+        .section-title {
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 14px;
+            text-transform: uppercase;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .equip-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+        .equip-item {
+            background: #fef3c7; color: #92400e; padding: 6px 12px;
+            border-radius: 20px; display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; border: 1px solid #fcd34d;
+        }
+        .equip-item .remove-tag { cursor: pointer; color: #b91c1c; font-weight: bold; }
+
+        .results-table, .op-table { width: 100%; border-collapse: collapse; margin-top: 10px; background: #fff; }
+        .results-table th, .results-table td, .op-table th, .op-table td {
+            border: 1px solid #cbd5e1; padding: 8px 10px; font-size: 13px;
+        }
+        .results-table th { background-color: #ede9fe; color: #5b21b6; text-align: center; }
+        .op-table th { background-color: #e0f2fe; color: #0369a1; text-align: center; }
+
+        .red-note-input {
+            color: var(--accent-red); font-weight: 700; text-align: center; width: 80px !important; background-color: #fef2f2 !important;
+        }
+        .img-preview { max-width: 140px; max-height: 100px; object-fit: contain; border: 1px solid #cbd5e1; margin-top: 6px; display: none; }
+
+        @media print {
+            body { background: white !important; padding: 0; }
+            .container { border: none; box-shadow: none; width: 100%; max-width: 100%; padding: 0; }
+            .actions-bar, .no-print { display: none !important; }
+        }
+    </style>
+<style id="widilo-popup-style">.widilo-ext_btn-secondary--grey,.widilo-ext_btn-secondary,.widilo-ext_btn-secondary--color,.widilo-ext_btn-primary--voucher,.widilo-ext_btn-primary--cashback,.widilo-ext_btn-primary,.widilo-ext_btn-code--opened .widilo-ext_btn-code--opened_btn,.widilo-ext_btn-code{border-width:1px;border-style:solid;text-align:center;font-weight:500;border-radius:8px;width:100%;box-shadow:0px 1px 2px 0px rgba(189,189,189,.18);font-size:15px;padding:12px 24px;line-height:20px;cursor:pointer;white-space:nowrap;text-decoration:none;display:flex;justify-content:center;align-items:center}.widilo-ext_btn-secondary--grey:focus-visible,.widilo-ext_btn-secondary:focus-visible,.widilo-ext_btn-secondary--color:focus-visible,.widilo-ext_btn-primary--voucher:focus-visible,.widilo-ext_btn-primary--cashback:focus-visible,.widilo-ext_btn-primary:focus-visible,.widilo-ext_btn-code--opened .widilo-ext_btn-code--opened_btn:focus-visible,.widilo-ext_btn-code:focus-visible,.focus.widilo-ext_btn-secondary--grey,.focus.widilo-ext_btn-secondary,.focus.widilo-ext_btn-secondary--color,.focus.widilo-ext_btn-primary--voucher,.focus.widilo-ext_btn-primary--cashback,.focus.widilo-ext_btn-primary,.widilo-ext_btn-code--opened .focus.widilo-ext_btn-code--opened_btn,.focus.widilo-ext_btn-code{box-shadow:0px 0px 0px 4px var(--wd-color-grey-800),0px 1px 2px 0px rgba(189,189,189,.18)}.widilo-ext_btn-secondary--grey:hover,.widilo-ext_btn-secondary:hover,.widilo-ext_btn-secondary--color:hover,.widilo-ext_btn-primary--voucher:hover,.widilo-ext_btn-primary--cashback:hover,.widilo-ext_btn-primary:hover,.widilo-ext_btn-code--opened .widilo-ext_btn-code--opened_btn:hover,.widilo-ext_btn-code:hover,.hover.widilo-ext_btn-secondary--grey,.hover.widilo-ext_btn-secondary,.hover.widilo-ext_btn-secondary--color,.hover.widilo-ext_btn-primary--voucher,.hover.widilo-ext_btn-primary--cashback,.hover.widilo-ext_btn-primary,.widilo-ext_btn-code--opened .hover.widilo-ext_btn-code--opened_btn,.hover.widilo-ext_btn-code{text-decoration:none}.widilo-ext_btn-secondary--grey:disabled,.widilo-ext_btn-secondary:disabled,.widilo-ext_btn-secondary--color:disabled,.widilo-ext_btn-primary--voucher:disabled,.widilo-ext_btn-primary--cashback:disabled,.widilo-ext_btn-primary:disabled,.widilo-ext_btn-code--opened .widilo-ext_btn-code--opened_btn:disabled,.widilo-ext_btn-code:disabled,.widilo-ext_btn--disabled.widilo-ext_btn-secondary--grey,.widilo-ext_btn--disabled.widilo-ext_btn-secondary,.widilo-ext_btn--disabled.widilo-ext_btn-secondary--color,.widilo-ext_btn--disabled.widilo-ext_btn-primary--voucher,.widilo-ext_btn--disabled.widilo-ext_btn-primary--cashback,.widilo-ext_btn--disabled.widilo-ext_btn-primary,.widilo-ext_btn-code--opened .widilo-ext_btn--disabled.widilo-ext_btn-code--opened_btn,.widilo-ext_btn--disabled.widilo-ext_btn-code,.widilo-ext_btn--muted.widilo-ext_btn-secondary--grey,.widilo-ext_btn--muted.widilo-ext_btn-secondary,.widilo-ext_btn--muted.widilo-ext_btn-secondary--color,.widilo-ext_btn--muted.widilo-ext_btn-primary--voucher,.widilo-ext_btn--muted.widilo-ext_btn-primary--cashback,.widilo-ext_btn--muted.widilo-ext_btn-primary,.widilo-ext_btn-code--opened .widilo-ext_btn--muted.widilo-ext_btn-code--opened_btn,.widilo-ext_btn--muted.widilo-ext_btn-code{box-shadow:none;pointer-events:none;cursor:default}.widilo-ext_btn_trailing-icon.widilo-ext_btn-secondary--grey>svg,.widilo-ext_btn_trailing-icon.widilo-ext_btn-secondary>svg,.widilo-ext_btn_trailing-icon.widilo-ext_btn-secondary--color>svg,.widilo-ext_btn_trailing-icon.widilo-ext_btn-primary--voucher>svg,.widilo-ext_btn_trailing-icon.widilo-ext_btn-primary--cashback>svg,.widilo-ext_btn_trailing-icon.widilo-ext_btn-primary>svg,.widilo-ext_btn-code--opened .widilo-ext_btn_trailing-icon.widilo-ext_btn-code--opened_btn>svg,.widilo-ext_btn_trailing-icon.widilo-ext_btn-code>svg,.widilo-ext_btn_leading-icon.widilo-ext_btn-secondary--grey>svg,.widilo-ext_btn_leading-icon.widilo-ext_btn-secondary>svg,.widilo-ext_btn_leading-icon.widilo-ext_btn-secondary--color>svg,.widilo-ext_btn_leading-icon.widilo-ext_btn-primary--voucher>svg,.widilo-ext_btn_leading-icon.widilo-ext_btn-primary--cashback>svg,.widilo-ext_btn_leading-icon.widilo-ext_btn-primary>svg,.widilo-ext_btn-code--opened .widilo-ext_btn_leading-icon.widilo-ext_btn-code--opened_btn>svg,.widilo-ext_btn_leading-icon.widilo-ext_btn-code>svg{height:20px;width:20px}.widilo-ext_btn-secondary--grey .widilo-ext_btn-primary_separator,.widilo-ext_btn-secondary .widilo-ext_btn-primary_separator,.widilo-ext_btn-secondary--color .widilo-ext_btn-primary_separator,.widilo-ext_btn-primary--voucher .widilo-ext_btn-primary_separator,.widilo-ext_btn-primary--cashback .widilo-ext_btn-primary_separator,.widilo-ext_btn-primary .widilo-ext_btn-primary_separator,.widilo-ext_btn-code--opened .widilo-ext_btn-code--opened_btn .widilo-ext_btn-primary_separator,.widilo-ext_btn-code .widilo-ext_btn-primary_separator{margin-right:3px;margin-left:3px}.widilo-ext_btn-primary,.widilo-ext_btn-code--opened .widilo-ext_btn-code--opened_btn,.widilo-ext_btn-code{background-color:var(--wd-color-primary-500);border-color:var(--wd-color-primary-500);color:var(--wd-color-grey-800);display:block}@media(hover: hover)and (pointer: fine){.widilo-ext_btn-primary:hover,.widilo-ext_btn-code--opened .widilo-ext_btn-code--opened_btn:hover,.widilo-ext_btn-code:hover,.widilo-ext_btn-primary:hover:not(:active),.widilo-ext_btn-primary.hover,.widilo-ext_btn-code--opened .hover.widilo-ext_btn-code--opened_btn,.hover.widilo-ext_btn-code,.widilo-ext_btn-primary.hover:not(:active){background:linear-gradient(0deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.3) 100%),var(--wd-color-primary-500);border-color:rgba(0,0,0,0);color:var(--wd-color-grey-800)}}.widilo-ext_btn-primary:hover,.widilo-ext_btn-code--opened .widilo-ext_btn-code--opened_btn:hover,.widilo-ext_btn-code:hover,.widilo-ext_btn-primary:focus,.widilo-ext_btn-code--opened .widilo-ext_btn-code--opened_btn:focus,.widilo-ext_btn-code:focus,.widilo-ext_btn-primary.focus,.widilo-ext_btn-code--opened .focus.widilo-ext_btn-code--opened_btn,.focus.widilo-ext_btn-code,.widilo-ext_btn-primary:focus-visible,.widilo-ext_btn-code--opened .widilo-ext_btn-code--opened_btn:focus-visible,.widilo-ext_btn-code:focus-visible,.widilo-ext_btn-primary.hover,.widilo-ext_btn-code--opened .hover.widilo-ext_btn-code--opened_btn,.hover.widilo-ext_btn-code{color:var(--wd-color-grey-800);border-color:rgba(0,0,0,0)}.widilo-ext_btn-primary:disabled,.widilo-ext_btn-code--opened .widilo-ext_btn-code--opened_btn:disabled,.widilo-ext_btn-code:disabled,.widilo-ext_btn-primary.widilo-ext_btn--disabled,.widilo-ext_btn-code--opened .widilo-ext_btn--disabled.widilo-ext_btn-code--opened_btn,.widilo-ext_btn--disabled.widilo-ext_btn-code{background-color:var(--wd-color-grey-300);border-color:var(--wd-color-grey-300);color:#fff}.widilo-ext_btn-primary--cashback{background-color:var(--wd-color-secondary-500);border-color:var(--wd-color-secondary-500);color:#fff}.widilo-ext_btn-primary--cashback:hover,.widilo-ext_btn-primary--cashback:focus,.widilo-ext_btn-primary--cashback.focus,.widilo-ext_btn-primary--cashback:focus-visible,.widilo-ext_btn-primary--cashback.hover{color:#fff;border-color:rgba(0,0,0,0)}@media(hover: hover)and (pointer: fine){.widilo-ext_btn-primary--cashback:hover,.widilo-ext_btn-primary--cashback:hover:not(:active),.widilo-ext_btn-primary--cashback.hover,.widilo-ext_btn-primary--cashback.hover:not(:active){background:linear-gradient(0deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.3) 100%),var(--wd-color-secondary-500);color:#fff;border-color:rgba(0,0,0,0)}}.widilo-ext_btn-primary--cashback:disabled,.widilo-ext_btn-primary--cashback.widilo-ext_btn--disabled{background-color:var(--wd-color-grey-300);border-color:var(--wd-color-grey-300);color:#fff}.widilo-ext_btn-primary--cashback.widilo-ext_btn--muted{background:linear-gradient(0deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.3) 100%),var(--wd-color-secondary-500)}.widilo-ext_btn-primary--voucher{background-color:var(--wd-color-grey-800);border-color:var(--wd-color-grey-800);color:#fff}.widilo-ext_btn-primary--voucher:hover,.widilo-ext_btn-primary--voucher:focus,.widilo-ext_btn-primary--voucher.focus,.widilo-ext_btn-primary--voucher:focus-visible,.widilo-ext_btn-primary--voucher.hover{color:#fff;border-color:rgba(0,0,0,0)}@media(hover: hover)and (pointer: fine){.widilo-ext_btn-primary--voucher:hover,.widilo-ext_btn-primary--voucher:hover:not(:active),.widilo-ext_btn-primary--voucher.hover,.widilo-ext_btn-primary--voucher.hover:not(:active){background:linear-gradient(0deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.3) 100%),var(--wd-color-grey-800);color:#fff;border-color:rgba(0,0,0,0)}}.widilo-ext_btn-primary--voucher:disabled,.widilo-ext_btn-primary--voucher.widilo-ext_btn--disabled{background-color:var(--wd-color-grey-300);border-color:var(--wd-color-grey-300);color:#fff}.widilo-ext_btn-primary--voucher.widilo-ext_btn--muted{background:linear-gradient(0deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.3) 100%),var(--wd-color-grey-800)}.widilo-ext_btn-secondary--grey,.widilo-ext_btn-secondary,.widilo-ext_btn-secondary--color{background-color:#fff;color:var(--wd-color-grey-800)}.widilo-ext_btn-secondary--grey:disabled,.widilo-ext_btn-secondary:disabled,.widilo-ext_btn-secondary--color:disabled,.disabled.widilo-ext_btn-secondary--grey,.disabled.widilo-ext_btn-secondary,.disabled.widilo-ext_btn-secondary--color{opacity:.4}@media(hover: hover)and (pointer: fine){.widilo-ext_btn-secondary--grey:hover,.widilo-ext_btn-secondary:hover,.widilo-ext_btn-secondary--color:hover,.hover.widilo-ext_btn-secondary--grey,.hover.widilo-ext_btn-secondary,.hover.widilo-ext_btn-secondary--color{color:var(--wd-color-grey-800)}}.widilo-ext_btn-secondary,.widilo-ext_btn-secondary--color{border-color:var(--wd-color-primary-500)}@media(hover: hover)and (pointer: fine){.widilo-ext_btn-secondary:hover,.widilo-ext_btn-secondary.hover,.widilo-ext_btn-secondary--color:hover,.widilo-ext_btn-secondary--color.hover{color:var(--wd-color-grey-800);background-color:var(--wd-color-primary-100)}}.widilo-ext_btn-secondary--grey{border-color:var(--wd-color-grey-300)}@media(hover: hover)and (pointer: fine){.widilo-ext_btn-secondary--grey:hover,.widilo-ext_btn-secondary--grey.hover{background-color:var(--wd-color-grey-50)}}.widilo-ext_btn-code{position:relative;z-index:0}.widilo-ext_btn-code:hover>span:first-child::after,.widilo-ext_btn-code.hover>span:first-child::after{transition:clip-path .3s ease;background:linear-gradient(-89deg, #FFD850 100%);clip-path:polygon(21.351% 84.176%, 0% 0%, 51.784% 39.899%, 80.445% 68.543%, 80.445% 68.543%, 80.974% 69.195%, 81.356% 69.927%, 81.593% 70.714%, 81.69% 71.528%, 81.651% 72.344%, 81.477% 73.136%, 81.173% 73.878%, 80.743% 74.544%, 80.189% 75.107%, 79.516% 75.543%, 40.629% 94.79%, 40.629% 94.79%, 38.246% 95.695%, 35.84% 96.095%, 33.459% 96.015%, 31.147% 95.482%, 28.952% 94.519%, 26.921% 93.154%, 25.098% 91.412%, 23.531% 89.318%, 22.267% 86.897%, 21.351% 84.176%)}.widilo-ext_btn-code>span:first-child{font-size:15px}.widilo-ext_btn-code>span:first-child::after{transition:clip-path .3s ease;background:linear-gradient(160deg, #E6C11E, #FFD850 115%);content:"";display:block;height:60px;position:absolute;right:0;top:0;clip-path:polygon(39.134% 86.282%, 0% 0%, 51.784% 39.899%, 93.829% 67.783%, 93.829% 67.783%, 94.513% 68.365%, 95.033% 69.073%, 95.392% 69.874%, 95.591% 70.733%, 95.631% 71.616%, 95.515% 72.491%, 95.242% 73.322%, 94.816% 74.076%, 94.236% 74.719%, 93.506% 75.217%, 57.527% 93.736%, 57.527% 93.736%, 55.44% 94.593%, 53.317% 95.058%, 51.192% 95.143%, 49.1% 94.863%, 47.073% 94.231%, 45.148% 93.261%, 43.357% 91.968%, 41.735% 90.364%, 40.316% 88.464%, 39.134% 86.282%);width:56px;z-index:3}.widilo-ext_btn-code>span:last-child{position:absolute;z-index:2;top:0;right:0;border-radius:7.5px;border-top-left-radius:0;overflow:hidden;width:55.5px;height:100%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px}.widilo-ext_btn-code>span:last-child::before{content:var(--code-preview, "");position:absolute;color:var(--wd-color-grey-800);font-weight:700;font-size:15px;right:10px;top:0;width:30px;height:100%;display:flex;align-items:center;justify-content:flex-end;overflow:hidden;z-index:3}.widilo-ext_btn-code>span:last-child::after{right:0;top:0;z-index:2;width:57px;height:100%;position:absolute;content:"";background:#fff;clip-path:polygon(57% 100%, 100% 100%, 100% 0%, 3% 0%)}.widilo-ext_btn-code--opened{width:100%;display:flex;min-height:45px}.widilo-ext_btn-code--opened .widilo-ext_btn-code--opened_coupon{flex-grow:1;padding:5px 12px;border-radius:8px 0px 0px 8px;border:1px dashed var(--wd-color-primary-500);font-weight:700;font-size:15px;line-height:20px;text-align:center;display:flex;justify-content:center;align-items:center}.widilo-ext_btn-code--opened .widilo-ext_btn-code--opened_btn{border-radius:0px 8px 8px 0px;padding:5px 15px;line-height:20px;width:auto;display:flex;justify-content:center;align-items:center}.widilo-ext_btn-underlined--grey,.widilo-ext_btn-tertiary--white,.widilo-ext_btn-tertiary--grey,.widilo-ext_btn-tertiary--color{border:none;background:none;color:var(--wd-color-grey-800);font-size:14px;text-align:center;font-weight:500;line-height:20px;cursor:pointer}.widilo-ext_btn-underlined--grey:hover,.widilo-ext_btn-tertiary--white:hover,.widilo-ext_btn-tertiary--grey:hover,.widilo-ext_btn-tertiary--color:hover,.hover.widilo-ext_btn-underlined--grey,.hover.widilo-ext_btn-tertiary--white,.hover.widilo-ext_btn-tertiary--grey,.hover.widilo-ext_btn-tertiary--color{text-decoration:none}.widilo-ext_btn-underlined--grey:disabled,.widilo-ext_btn-tertiary--white:disabled,.widilo-ext_btn-tertiary--grey:disabled,.widilo-ext_btn-tertiary--color:disabled,.widilo-ext_btn--disabled.widilo-ext_btn-underlined--grey,.widilo-ext_btn--disabled.widilo-ext_btn-tertiary--white,.widilo-ext_btn--disabled.widilo-ext_btn-tertiary--grey,.widilo-ext_btn--disabled.widilo-ext_btn-tertiary--color{color:var(--wd-color-grey-300);pointer-events:none}.widilo-ext_btn-underlined--grey:focus-visible,.widilo-ext_btn-tertiary--white:focus-visible,.widilo-ext_btn-tertiary--grey:focus-visible,.widilo-ext_btn-tertiary--color:focus-visible,.focus.widilo-ext_btn-underlined--grey,.focus.widilo-ext_btn-tertiary--white,.focus.widilo-ext_btn-tertiary--grey,.focus.widilo-ext_btn-tertiary--color{border-radius:8px;box-shadow:0px 0px 0px 4px var(--wd-color-grey-800),0px 1px 2px 0px rgba(189,189,189,.18)}.widilo-ext_btn-tertiary--white,.widilo-ext_btn-tertiary--grey,.widilo-ext_btn-tertiary--color{padding:12px 24px;border-radius:8px}@media(hover: hover)and (pointer: fine){.widilo-ext_btn-tertiary--color:hover,.widilo-ext_btn-tertiary--color.hover{background-color:var(--wd-color-primary-100)}}@media(hover: hover)and (pointer: fine){.widilo-ext_btn-tertiary--grey:hover,.widilo-ext_btn-tertiary--grey.hover{background-color:var(--wd-color-grey-50)}}@media(hover: hover)and (pointer: fine){.widilo-ext_btn-tertiary--white:hover,.widilo-ext_btn-tertiary--white.hover{background-color:var(--wd-color-basics-white)}}.widilo-ext_btn-underlined--grey{position:relative;display:inline-block;padding:0px;padding-bottom:2px}.widilo-ext_btn-underlined--grey>span{position:relative;display:inline-block}.widilo-ext_btn-underlined--grey::after{content:"";width:0px;height:2px;border-radius:50px;background-color:var(--wd-color-primary-500);position:absolute;bottom:0px;left:0px;transition:width 300ms ease}.widilo-ext_btn-underlined--grey:has(span){padding-bottom:0px !important}.widilo-ext_btn-underlined--grey:has(span)::before,.widilo-ext_btn-underlined--grey:has(span)::after{content:none !important}.widilo-ext_btn-underlined--grey:has(span)>span{padding-bottom:2px !important}.widilo-ext_btn-underlined--grey:has(span)>span::after{content:"";width:0px;height:2px;border-radius:50px;background-color:var(--wd-color-primary-500);position:absolute;bottom:0px;left:0px;transition:width 300ms ease}@media(hover: hover)and (pointer: fine){.widilo-ext_btn-underlined--grey:hover,.hover.widilo-ext_btn-underlined--grey{color:var(--wd-color-grey-800)}.widilo-ext_btn-underlined--grey:hover::after,.hover.widilo-ext_btn-underlined--grey::after{width:100%}.widilo-ext_btn-underlined--grey:hover:has(span)>span::after,.hover.widilo-ext_btn-underlined--grey:has(span)>span::after{width:100%}}.widilo-ext_btn-underlined--grey:focus,.focus.widilo-ext_btn-underlined--grey{color:var(--wd-color-grey-800)}.widilo-ext_btn-underlined--grey::before{content:"";width:0px;height:2px;border-radius:50px;background-color:var(--wd-color-grey-800);position:absolute;bottom:0px;left:0px;transition:width 300ms ease;width:100%}.widilo-ext_btn-underlined--grey::after{background-color:var(--wd-color-grey-200)}.widilo-ext_btn-underlined--grey:has(span)::before{content:none !important}.widilo-ext_btn-underlined--grey:has(span)>span::before{content:"";width:0px;height:2px;border-radius:50px;background-color:var(--wd-color-grey-800);position:absolute;bottom:0px;left:0px;transition:width 300ms ease;width:100%}.widilo-ext_btn-underlined--grey:has(span)>span::after{background-color:var(--wd-color-grey-200)}.widilo-ext_btn_trailing-icon>svg{margin-left:8px;width:14px;height:14px}.widilo-ext_btn_leading-icon>svg{margin-right:8px;width:14px;height:14px}.widilo-ext_btn-primary--cashback.widilo-ext_btn-primary--cashback--activated{box-shadow:none;border:none;background-color:#fff;color:var(--wd-color-secondary-500);box-shadow:none;pointer-events:none;cursor:default}.widilo-ext_btn-primary--cashback.widilo-ext_btn-primary--cashback--activated>span{animation:widilo_fadeInSlideFromRight .2s ease-in-out}@keyframes widilo_fadeInSlideFromLeft{0%{opacity:0;transform:translateX(-20px)}100%{opacity:1;transform:translateX(0)}}@keyframes widilo_fadeInSlideFromRight{0%{opacity:0;transform:translateX(20px)}100%{opacity:1;transform:translateX(0)}}.widilo-ext_linethrough{text-decoration:line-through}.widilo-ext_bold{font-weight:700}.widilo-dot-primary{position:relative;padding-left:12px}.widilo-dot-primary::before{content:"";position:absolute;top:50%;left:4px;width:7px;height:7px;border-radius:50%;transform:translate(-50%, -50%)}.widilo-dot-primary::before{background-color:var(--wd-color-secondary-500)}input[type=radio]:hover{cursor:pointer}.widilo-popup_radio{display:block;min-height:1.5rem;padding-left:1.5em;margin-bottom:.125rem}.widilo-popup_radio .widilo-popup_radio_input{border-radius:50%;-webkit-appearance:none;-moz-appearance:none;appearance:none;border:solid 1px var(--wd-color-primary-500);margin-top:.25em;vertical-align:top;background-color:#fff;background-repeat:no-repeat;background-position:center;background-size:contain;float:left;margin:0;margin-left:-1.5em;font-size:16px;width:14px;height:14px;margin-top:2px}.widilo-popup_radio .widilo-popup_radio_input:checked,.widilo-popup_radio .widilo-popup_radio_input.checked{border-color:var(--wd-color-primary-500);background-color:#fff;background-image:url(data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%27-4%20-4%208%208%27%3E%3Ccircle%20r%3D%272%27%20fill%3D%27%23FFD850%27%2F%3E%3C%2Fsvg%3E)}.widilo-popup_radio .widilo-popup_radio_input:hover,.widilo-popup_radio .widilo-popup_radio_input.hover{background-color:var(--wd-color-primary-100)}.widilo-popup_radio .widilo-popup_radio_input:focus{border-color:var(--wd-color-primary-600);box-shadow:none}.widilo-popup_radio .widilo-popup_radio_input:focus-visible,.widilo-popup_radio .widilo-popup_radio_input.focus{outline:none;box-shadow:0px 0px 0px 4px var(--wd-color-grey-800),0px 1px 2px 0px rgba(189,189,189,.18) !important}.widilo-popup_radio .widilo-popup_radio_input:disabled,.widilo-popup_radio .widilo-popup_radio_input.disabled{background-color:var(--wd-color-grey-100);border-color:var(--wd-color-grey-200);cursor:not-allowed}.widilo-popup_radio .widilo-popup_radio_input:disabled:checked,.widilo-popup_radio .widilo-popup_radio_input:disabled.checked,.widilo-popup_radio .widilo-popup_radio_input.disabled:checked,.widilo-popup_radio .widilo-popup_radio_input.disabled.checked{background-image:url(data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%27-4%20-4%208%208%27%3E%3Ccircle%20r%3D%272%27%20fill%3D%27%23ebebeb%27%2F%3E%3C%2Fsvg%3E)}.widilo-popup_radio .widilo-popup_radio_label{font-size:12px;font-weight:400;line-height:normal;text-align:left}.widilo-ext_flag{width:14px;height:auto}.widilo-popup-iframe{--mobile-iframe-move-down-y: 0;--popup-small-height: 341px;user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;background-color:#fff;color:var(--wd-color-grey-800);box-shadow:0 4px 6px rgba(0,0,0,.1);width:375px;height:562px;position:fixed;top:20px;right:20px;z-index:2147483647 !important;border-radius:20px;overflow:hidden;border:none}.widilo-popup-iframe.widilo-popup-iframe--small{height:var(--popup-small-height)}.widilo-popup-iframe.widilo-popup-iframe--demo{z-index:2 !important}.widilo-popup-iframe.widilo-popup-iframe--mobile:not(.widilo-popup-iframe--small){height:70vh}.widilo-popup-iframe.widilo-popup-iframe--mobile{top:unset;bottom:0;right:0;border-bottom-left-radius:0px;border-bottom-right-radius:0px;box-shadow:1px -4px 6px rgba(0,0,0,.1);width:100%}.widilo-popup-iframe.widilo-popup-iframe--mobile.widilo-popup-trans--enter-active{animation:widilo_moveUp .2s ease-out forwards}.widilo-popup-iframe.widilo-popup-iframe--mobile.widilo-popup-trans--exit-active{animation:widilo_moveDown .2s ease-out forwards}.widilo-popup-iframe.widilo-popup-trans--enter-active{animation:widilo_moveLeft .2s ease-out forwards}.widilo-popup-iframe.widilo-popup-trans--exit-active{animation:widilo_moveRight .2s ease-out forwards}@keyframes widilo_moveLeft{0%{transform:translateX(100%)}100%{transform:translateX(0)}}@keyframes widilo_moveRight{0%{transform:translateX(0)}100%{transform:translateX(100%)}}@keyframes widilo_moveUp{0%{transform:translateY(100%)}100%{transform:translateY(0)}}@keyframes widilo_moveDown{0%{transform:translateY(var(--mobile-iframe-move-down-y))}100%{transform:translateY(100%)}}.widilo-fab-button-iframe{user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;position:fixed;bottom:20px;right:0px;z-index:2147483647 !important;display:flex;border-bottom-left-radius:50px;border-top-left-radius:50px;box-shadow:0 4px 6px rgba(0,0,0,.1);height:48px;width:43px;transition:width .3s ease;touch-action:none;border:0px}.widilo-fab-button-iframe.widilo-fab-button-iframe--hovered{width:68px}.widilo-fab-button-iframe.widilo-fab-button-iframe--demo{z-index:2 !important}@media print{.widilo-popup-iframe,.widilo-fab-button-iframe{display:none}}</style></head>
+<body>
+
+<div class="container" id="mainContainer">
+    <div class="actions-bar no-print">
+        <div class="theme-selector">
+            <label for="atelierTheme" style="margin:0; display:inline;">Matière / Métier :</label>
+            <select id="atelierTheme" onchange="updateTradeVisuals(this)" style="width: auto;">
+                <option value="none">-- Choisir --</option>
+                <option value="menuiserie">Menuiserie</option>
+                <option value="maconnerie">Maçonnerie</option>
+                <option value="plomberie">Plomberie</option>
+                <option value="electricite">Électricité</option>
+                <option value="finition">Finition</option>
+                <option value="ere">ERE</option>
+            </select>
+        </div>
+
+        <div style="display: flex; gap: 10px; align-items: center;">
+            <a href="../index.html" class="btn btn-home">🏠 Menu Principal</a>
+            <button class="btn btn-save" onclick="saveData()">💾 Enregistrer</button>
+            <button class="btn btn-print" onclick="window.print()">🖨️ Imprimer</button>
+        </div>
+    </div>
+
+    <table class="header-table">
+        <tbody><tr>
+            <td style="width: 25%;">
+                <label>Numéro TP</label>
+                <input type="text" id="tpNumber" value="1" style="font-weight: bold; width: 80px;">
+            </td>
+            <td class="tp-title">
+                <span id="tradeIconLeft" class="trade-icon">🪚</span>
+                <span>FICHE DE PREPARATION D'ATELIER</span>
+                <span id="tradeIconRight" class="trade-icon">🪓</span>
+            </td>
+            <td style="width: 30%;">
+                <label>Durée</label>
+                <select id="tpDuration"><option value="30 min">30 min</option><option value="1h00">1h00</option><option value="1h30">1h30</option><option value="2h00">2h00</option><option value="2h30">2h30</option><option value="3h00">3h00</option><option value="3h30">3h30</option><option value="4h00">4h00</option><option value="4h30">4h30</option><option value="5h00">5h00</option><option value="5h30">5h30</option><option value="6h00">6h00</option><option value="6h30">6h30</option><option value="7h00">7h00</option><option value="7h30">7h30</option><option value="8h00">8h00</option></select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <label>Nom de l'élève</label> 
+                <input type="text" placeholder="Prénom Nom">
+            </td>
+            <td>
+                <label>Date</label> 
+                <input type="date" id="tpDate">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <label>Titre / Sujet</label>
+                <input type="text" id="tpSubject" value="Sciage">
+            </td>
+        </tr>
+    </tbody></table>
+
+    <div class="section-box box-material">
+        <div class="section-title">📦 Matériel nécessaire :</div>
+        <div class="no-print" style="display: flex; gap: 10px; margin-bottom: 10px;">
+            <select id="equipSelect" onchange="checkOtherOption(this)" style="max-width: 250px;">
+                <option value="">-- Choisir --</option>
+                <option value="Équerre">Équerre</option>
+                <option value="Mètre">Mètre</option>
+                <option value="Scie">Scie</option>
+                <option value="Autre">Autre...</option>
+            </select>
+            <input type="text" id="otherEquipInput" placeholder="Préciser..." style="display: none; max-width: 200px;">
+            <button class="btn btn-add" onclick="addEquipment()">Ajouter</button>
+        </div>
+        <div class="equip-list" id="equipList"></div>
+    </div>
+
+    <div class="section-box box-objectives">
+        <div class="section-title">🎯 Objectifs &amp; Consignes</div>
+        <textarea rows="3" placeholder="Objectifs..."></textarea>
+    </div>
+
+    <div class="section-box box-results">
+        <div class="section-title">
+            <span>⭐ Évaluation</span>
+            <button class="btn btn-add no-print" onclick="addResultRow()">+ Ligne</button>
+        </div>
+        <table class="results-table" id="resultsTable">
+            <thead>
+                <tr>
+                    <th style="width: 65%;">Critères</th>
+                    <th style="width: 20%;">Note</th>
+                    <th class="no-print" style="width: 15%;">Action</th>
+                </tr>
+            </thead>
+            <tbody id="resultsBody">
+                <tr>
+                    <td><input type="text" value="Respect des mesures"></td>
+                    <td><input type="text" class="red-note-input" value="/ 5"></td>
+                    <td class="no-print" style="text-align: center;"><button class="btn btn-remove" onclick="this.closest('tr').remove()">X</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section-box box-op" id="opModeSection">
+        <div class="section-title">
+            <span>🛠️ Mode Opératoire</span>
+            <button class="btn btn-add no-print" onclick="addOpRow()">+ Phase</button>
+        </div>
+        <table class="op-table" id="opTable">
+            <thead>
+                <tr>
+                    <th style="width: 6%;">N°</th>
+                    <th style="width: 18%;">Phases</th>
+                    <th style="width: 32%;">Opérations</th>
+                    <th style="width: 16%;">Moyens</th>
+                    <th style="width: 20%;">Vérification</th>
+                    <th class="no-print" style="width: 8%;">Action</th>
+                </tr>
+            </thead>
+            <tbody id="opBody"><tr>
+            <td style="text-align: center; font-weight: bold;">1</td>
+            <td><input type="text" placeholder="Phase..."></td>
+            <td><textarea rows="2" placeholder="Opérations..."></textarea></td>
+            <td><textarea rows="2" placeholder="Moyens..."></textarea></td>
+            <td><textarea rows="2" placeholder="Vérification..."></textarea></td>
+            <td class="no-print" style="text-align: center;"><button class="btn btn-remove" onclick="this.closest('tr').remove()">X</button></td>
+        </tr></tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    let opCounter = 0;
+    const GITHUB_USER = "legros312-cloud";
+    const GITHUB_REPO = "fiche-de-deroulement";
+
+    window.onload = function() {
+        const selectDuration = document.getElementById('tpDuration');
+        for (let minutes = 30; minutes <= 480; minutes += 30) {
+            let hours = Math.floor(minutes / 60);
+            let mins = minutes % 60;
+            let label = hours > 0 ? (mins > 0 ? `${hours}h${mins}` : `${hours}h00`) : `${mins} min`;
+            let opt = document.createElement('option');
+            opt.value = label; opt.innerText = label;
+            selectDuration.appendChild(opt);
+        }
+        document.getElementById('tpDate').value = new Date().toISOString().split('T')[0];
+        addOpRow();
+    };
+
+    function updateTradeVisuals(select) {
+        const theme = select.value;
+        const icons = {
+            'menuiserie': { left: '🪚', right: '🪓' },  
+            'maconnerie': { left: '🧱', right: '⏳' },  
+            'plomberie': { left: '🚰', right: '🔧' },   
+            'electricite': { left: '⚡', right: '🔌' }, 
+            'finition': { left: '🖌️', right: '🚚' },   
+            'ere': { left: '🌳', right: '🌱' },        
+            'none': { left: '🛠️', right: '🛠️' }
+        };
+        const current = icons[theme] || icons['none'];
+        document.getElementById('tradeIconLeft').innerText = current.left;
+        document.getElementById('tradeIconRight').innerText = current.right;
+    }
+
+    function checkOtherOption(select) {
+        document.getElementById('otherEquipInput').style.display = (select.value === 'Autre') ? 'inline-block' : 'none';
+    }
+
+    function addEquipment() {
+        const select = document.getElementById('equipSelect');
+        const other = document.getElementById('otherEquipInput');
+        let text = select.value === 'Autre' ? other.value.trim() : select.value;
+        if (text) {
+            const item = document.createElement('div');
+            item.className = 'equip-item';
+            item.innerHTML = `<span>${text}</span><span class="remove-tag" onclick="this.parentElement.remove()">×</span>`;
+            document.getElementById('equipList').appendChild(item);
+            select.value = ""; other.value = ""; other.style.display = 'none';
+        }
+    }
+
+    function addOpRow() {
+        opCounter++;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td style="text-align: center; font-weight: bold;">${opCounter}</td>
+            <td><input type="text" placeholder="Phase..."></td>
+            <td><textarea rows="2" placeholder="Opérations..."></textarea></td>
+            <td><textarea rows="2" placeholder="Moyens..."></textarea></td>
+            <td><textarea rows="2" placeholder="Vérification..."></textarea></td>
+            <td class="no-print" style="text-align: center;"><button class="btn btn-remove" onclick="this.closest('tr').remove()">X</button></td>
+        `;
+        document.getElementById('opBody').appendChild(tr);
+    }
+
+    function addResultRow() {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td><input type="text" placeholder="Critère..."></td>
+            <td><input type="text" class="red-note-input" value="/ 5"></td>
+            <td class="no-print" style="text-align: center;"><button class="btn btn-remove" onclick="this.closest('tr').remove()">X</button></td>
+        `;
+        document.getElementById('resultsBody').appendChild(tr);
+    }
+
+    async function saveData() {
+        const themeSelect = document.getElementById('atelierTheme');
+        const theme = themeSelect.value;
+        
+        if (theme === "none") {
+            alert("❌ Veuillez sélectionner un métier/matière avant d'enregistrer pour classer le TP dans le bon dossier.");
+            themeSelect.focus();
+            return;
+        }
+
+        const tpNum = document.getElementById('tpNumber').value.trim() || '1';
+        const subject = document.getElementById('tpSubject').value.trim() || 'sans_titre';
+
+        const cleanNum = tpNum.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+        const cleanSubject = subject.toLowerCase()
+            .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+            .replace(/[^a-z0-9_-]/g, "_");
+
+        const fileName = `tp${cleanNum}-${theme}-${cleanSubject}.html`;
+        const folderPath = `tp/${theme}/`;
+        const fullPath = folderPath + fileName;
+
+        const mode = confirm(
+            `Fichier généré : ${fileName}\nDossier de destination : ${folderPath}\n\n` +
+            "• OK : Enregistrer directement sur GITHUB\n" +
+            "• Annuler : Télécharger sur le PC"
+        );
+
+        if (!mode) {
+            const blob = new Blob([document.documentElement.outerHTML], { type: 'text/html' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = fileName;
+            a.click();
+            return;
+        }
+
+        let token = localStorage.getItem('github_pat');
+        if (!token) {
+            token = prompt("Entrez votre jeton d'accès GitHub (Personal Access Token) :");
+            if (token) localStorage.setItem('github_pat', token.trim());
+            else { alert("Enregistrement annulé."); return; }
+        }
+
+        const htmlContent = document.documentElement.outerHTML;
+        const contentBase64 = btoa(unescape(encodeURIComponent(htmlContent)));
+        const apiUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${fullPath}`;
+
+        try {
+            let sha = null;
+            const getRes = await fetch(apiUrl, { headers: { 'Authorization': `token ${token}` } });
+            if (getRes.ok) {
+                const fileInfo = await getRes.json();
+                sha = fileInfo.sha;
+            }
+
+            const bodyData = {
+                message: `Ajout du TP ${fileName} dans ${folderPath}`,
+                content: contentBase64
+            };
+            if (sha) bodyData.sha = sha;
+
+            const putRes = await fetch(apiUrl, {
+                method: 'PUT',
+                headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
+                body: JSON.stringify(bodyData)
+            });
+
+            if (putRes.ok) {
+                alert(`✅ Succès ! Fichier enregistré sur GitHub dans :\n${fullPath}`);
+            } else {
+                const errData = await putRes.json();
+                alert(`❌ Erreur GitHub (${putRes.status}) : ${errData.message}`);
+                if (putRes.status === 401) localStorage.removeItem('github_pat');
+            }
+        } catch (err) {
+            alert("❌ Erreur réseau : " + err.message);
+        }
+    }
+</script>
+
+
+</body><div id="widilo-popup-container" data-content-script-id="2592f68c-9cd0-40d6-ab0e-81fef357461a"></div></html>
